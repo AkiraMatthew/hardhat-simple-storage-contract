@@ -1,19 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// imports
 const hardhat_1 = require("hardhat");
+// async main
 async function main() {
-    const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-    const unlockTime = currentTimestampInSeconds + 60;
-    const lockedAmount = hardhat_1.ethers.parseEther("0.001");
-    const lock = await hardhat_1.ethers.deployContract("Lock", [unlockTime], {
-        value: lockedAmount,
-    });
-    await lock.waitForDeployment();
-    console.log(`Lock with ${hardhat_1.ethers.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`);
+    const SimpleStorageFactory = await hardhat_1.ethers.getContractFactory('SimpleStorage');
+    console.log('Deploying contract...');
+    const simpleStorage = await SimpleStorageFactory.deploy();
+    await simpleStorage.deploymentTransaction();
+    const getSimpleStorageAddress = await simpleStorage.getAddress();
+    console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
+    // Getting the current transaction Hash
+    const txHash = await simpleStorage.deploymentTransaction();
+    console.log('Deployment Transaction Hash:', txHash?.hash);
+    // Getting the transaction details for reading the CLI
+    /*provider
+        .getTransaction(txHash)
+        .then((transaction) => {
+            console.log(`Sender: ${transaction.from}`);
+            console.log(`Contract: ${transaction.to}`);
+            console.log(`Transaction Data: ${transaction.data}`);
+        })
+        .catch((error) => {
+            console.error(`Error: ${error}`);
+        });*/
 }
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
+// main
+main()
+    .then(() => process.exit(0))
+    .catch((error) => {
     console.error(error);
-    process.exitCode = 1;
+    process.exit(1);
 });

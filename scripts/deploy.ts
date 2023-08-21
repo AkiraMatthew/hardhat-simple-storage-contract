@@ -1,27 +1,41 @@
-import { ethers } from "hardhat";
+// imports
+import { ethers } from 'hardhat';
+
+// async main
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+    const SimpleStorageFactory = await ethers.getContractFactory(
+        'SimpleStorage'
+    );
+    console.log('Deploying contract...');
+    const simpleStorage = await SimpleStorageFactory.deploy();
+    await simpleStorage.deploymentTransaction();
 
-  const lockedAmount = ethers.parseEther("0.001");
+    const getSimpleStorageAddress = await simpleStorage.getAddress();
+    console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+    // Getting the current transaction Hash
+    const txHash = await simpleStorage.deploymentTransaction();
+    console.log('Deployment Transaction Hash:', txHash?.hash);
 
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+    // Getting the transaction details for reading the CLI
+    /*provider
+        .getTransaction(txHash)
+        .then((transaction) => {
+            console.log(`Sender: ${transaction.from}`);
+            console.log(`Contract: ${transaction.to}`);
+            console.log(`Transaction Data: ${transaction.data}`);
+        })
+        .catch((error) => {
+            console.error(`Error: ${error}`);
+        });*/
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+// main
+
+main()
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });
