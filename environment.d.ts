@@ -1,13 +1,13 @@
-import { Bytes, BytesLike } from 'ethers';
+import { Bytecode } from 'hardhat/internal/hardhat-network/stack-traces/model';
 
 export {};
 
 declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      PRIVATE_KEY: BytesLike;
-      RPC_URL: string;
-      PRIVATE_KEY_PASSWORD: string;
+    namespace NodeJS {
+        interface ProcessEnv {
+            PRIVATE_KEY: string;
+            SEPOLIA_RPC_URL: string;
+            //PRIVATE_KEY_PASSWORD: string;
+        }
     }
-  }
 }

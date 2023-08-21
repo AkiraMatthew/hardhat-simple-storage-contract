@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "hardhat run scripts/public/scripts/deploy.js"
+    "deploy": "hardhat run scripts/public/scripts/deploy.js",
+    "sepolia": "npx hardhat run scripts/public/scripts/deploy.js --network sepolia"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "dotenv": "^16.3.1",
     "hardhat": "^2.17.1",
     "typechain": "^8.3.1",
     "typescript": "^5.1.6"
