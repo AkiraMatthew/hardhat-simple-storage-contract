@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "hardhat run scripts/public/scripts/deploy.js",
-    "sepolia": "npx hardhat run scripts/public/scripts/deploy.js --network sepolia"
+    "deploy": "hardhat run scripts/deploy.ts",
+    "sepolia": "hardhat run scripts/deploy.ts --network sepolia"
   },
   "keywords": [],
   "author": "",
@@ -15,15 +15,10 @@
     "@nomicfoundation/hardhat-ethers": "^3.0.4",
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "^1.1.1",
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "@nomiclabs/hardhat-waffle": "^2.0.6",
-    "@types/sinon-chai": "^3.2.9",
     "dotenv": "^16.3.1",
-    "ethereum-waffle": "^3.4.4",
-    "ethers": "^5.7.2",
+    "ethers": "^6.7.1",
     "hardhat": "^2.17.1",
     "ts-node": "^10.9.1",
-    "typechain": "^8.3.1",
     "typescript": "^5.1.6"
   }
 }

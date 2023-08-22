@@ -10,9 +10,9 @@ async function main() {
     );
     console.log('Deploying contract...');
     const simpleStorage = await SimpleStorageFactory.deploy();
-    await simpleStorage.deployTransaction;
+    await simpleStorage.deploymentTransaction();
 
-    const getSimpleStorageAddress = await simpleStorage.address;
+    const getSimpleStorageAddress = await simpleStorage.getAddress();
     console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
 
     console.log(network.config);
@@ -21,13 +21,13 @@ async function main() {
     // 4 == "4" -> true
     // 4 === "4" -> false
     if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
-        await simpleStorage.deployTransaction.wait(6);
-        await verify(simpleStorage.address, []);
+        await simpleStorage.deploymentTransaction()?.wait(6);
+        await verify(simpleStorage.getAddress(), []);
     }
 
     // Getting the current transaction Hash
-    const txHash = await simpleStorage.deployTransaction;
-    console.log('Deployment Transaction Hash:', txHash?.hash);
+    const txHash = await simpleStorage.deploymentTransaction;
+    console.log('Deployment Transaction Hash:', txHash);
 
     // Getting the transaction details for reading the CLI
     /*provider
@@ -44,7 +44,7 @@ async function main() {
 
 // This function will serve to verify automatically the code
 // in the blockexplorer, right after its deployment.
-async function verify(contractAddress: string, args: string) {
+async function verify(contractAddress: Promise<string>, args: string[]) {
     console.log('Verifying contract...');
     // we use trycatch because if the verification does not works,
     // the script will continue

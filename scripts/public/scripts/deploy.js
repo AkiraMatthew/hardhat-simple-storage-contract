@@ -8,8 +8,8 @@ async function main() {
     const SimpleStorageFactory = await hardhat_1.ethers.getContractFactory('SimpleStorage');
     console.log('Deploying contract...');
     const simpleStorage = await SimpleStorageFactory.deploy();
-    await simpleStorage.deployTransaction;
-    const getSimpleStorageAddress = await simpleStorage.address;
+    await simpleStorage.deploymentTransaction();
+    const getSimpleStorageAddress = await simpleStorage.getAddress();
     console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
     console.log(hardhat_1.network.config);
     // Verifying which network did we deployed our code
@@ -17,12 +17,12 @@ async function main() {
     // 4 == "4" -> true
     // 4 === "4" -> false
     if (hardhat_1.network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
-        await simpleStorage.deployTransaction.wait(6);
-        await verify(simpleStorage.address, []);
+        await simpleStorage.deploymentTransaction()?.wait(6);
+        await verify(simpleStorage.getAddress(), []);
     }
     // Getting the current transaction Hash
-    const txHash = await simpleStorage.deployTransaction;
-    console.log('Deployment Transaction Hash:', txHash?.hash);
+    const txHash = await simpleStorage.deploymentTransaction;
+    console.log('Deployment Transaction Hash:', txHash);
     // Getting the transaction details for reading the CLI
     /*provider
         .getTransaction(txHash)

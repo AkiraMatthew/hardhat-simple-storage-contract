@@ -7,6 +7,7 @@
         "strict": true,
         "skipLibCheck": true,
         "resolveJsonModule": true,
-        "outDir": "scripts/public"
+        "outDir": "scripts/public",
+        "types": ["node"]
     }
 }
