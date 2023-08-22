@@ -11,8 +11,15 @@ async function main() {
     await simpleStorage.deployTransaction;
     const getSimpleStorageAddress = await simpleStorage.address;
     console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
+    console.log(hardhat_1.network.config);
     // Verifying which network did we deployed our code
-    console.log(hardhat_1.network.config.chainId === 11155111);
+    // 4 == 4 -> true
+    // 4 == "4" -> true
+    // 4 === "4" -> false
+    if (hardhat_1.network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
+        await simpleStorage.deployTransaction.wait(6);
+        await verify(simpleStorage.address, []);
+    }
     // Getting the current transaction Hash
     const txHash = await simpleStorage.deployTransaction;
     console.log('Deployment Transaction Hash:', txHash?.hash);

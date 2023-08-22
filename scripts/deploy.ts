@@ -15,9 +15,15 @@ async function main() {
     const getSimpleStorageAddress = await simpleStorage.address;
     console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
 
+    console.log(network.config);
     // Verifying which network did we deployed our code
-
-    console.log(network.config.chainId === 11155111);
+    // 4 == 4 -> true
+    // 4 == "4" -> true
+    // 4 === "4" -> false
+    if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
+        await simpleStorage.deployTransaction.wait(6);
+        await verify(simpleStorage.address, []);
+    }
 
     // Getting the current transaction Hash
     const txHash = await simpleStorage.deployTransaction;
