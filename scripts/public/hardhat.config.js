@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-require("@nomicfoundation/hardhat-toolbox");
 require("dotenv/config");
+require("@nomicfoundation/hardhat-verify");
+require("@nomiclabs/hardhat-waffle");
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 const config = {
     // here isn't shown but by default we have:
     // defaultNetwork: "hardhat"
@@ -20,5 +22,8 @@ const config = {
         },
     },
     solidity: '0.8.8',
+    etherscan: {
+        apiKey: ETHERSCAN_API_KEY,
+    },
 };
 exports.default = config;

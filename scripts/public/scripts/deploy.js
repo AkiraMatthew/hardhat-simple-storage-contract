@@ -2,16 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // imports
 const hardhat_1 = require("hardhat");
+require("@nomicfoundation/hardhat-ethers");
 // async main
 async function main() {
     const SimpleStorageFactory = await hardhat_1.ethers.getContractFactory('SimpleStorage');
     console.log('Deploying contract...');
     const simpleStorage = await SimpleStorageFactory.deploy();
-    await simpleStorage.deploymentTransaction();
-    const getSimpleStorageAddress = await simpleStorage.getAddress();
+    await simpleStorage.deployTransaction;
+    const getSimpleStorageAddress = await simpleStorage.address;
     console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
+    // Verifying which network did we deployed our code
+    console.log(hardhat_1.network.config.chainId === 11155111);
     // Getting the current transaction Hash
-    const txHash = await simpleStorage.deploymentTransaction();
+    const txHash = await simpleStorage.deployTransaction;
     console.log('Deployment Transaction Hash:', txHash?.hash);
     // Getting the transaction details for reading the CLI
     /*provider
@@ -24,6 +27,27 @@ async function main() {
         .catch((error) => {
             console.error(`Error: ${error}`);
         });*/
+}
+// This function will serve to verify automatically the code
+// in the blockexplorer, right after its deployment.
+async function verify(contractAddress, args) {
+    console.log('Verifying contract...');
+    // we use trycatch because if the verification does not works,
+    // the script will continue
+    try {
+        await (0, hardhat_1.run)('verify: verify', {
+            address: contractAddress,
+            constructorArguments: args,
+        });
+    }
+    catch (e) {
+        if (e.message.toLowerCase().includes('already verified')) {
+            console.log('Already verified');
+        }
+        else {
+            console.log(e);
+        }
+    }
 }
 // main
 main()
