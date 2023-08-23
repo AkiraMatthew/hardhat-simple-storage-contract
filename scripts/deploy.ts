@@ -1,6 +1,5 @@
 // imports
 import { ethers, network, run } from 'hardhat';
-import '@nomicfoundation/hardhat-ethers';
 
 // async main
 
@@ -10,24 +9,33 @@ async function main() {
     );
     console.log('Deploying contract...');
     const simpleStorage = await SimpleStorageFactory.deploy();
-    await simpleStorage.deploymentTransaction();
+    await simpleStorage.deployTransaction;
 
-    const getSimpleStorageAddress = await simpleStorage.getAddress();
+    const getSimpleStorageAddress = await simpleStorage.address;
     console.log(`Deployed the contract to: ${getSimpleStorageAddress}`);
 
-    console.log(network.config);
+    //console.log(network.config);
     // Verifying which network did we deployed our code
     // 4 == 4 -> true
     // 4 == "4" -> true
     // 4 === "4" -> false
     if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
-        await simpleStorage.deploymentTransaction()?.wait(6);
-        await verify(simpleStorage.getAddress(), []);
+        await simpleStorage.deployTransaction.wait(6);
+        await verify(simpleStorage.address, []);
     }
 
+    const currentValue = await simpleStorage.retrieve();
+    console.log(`Current Value is : ${currentValue}`);
+
+    //Update the current value:
+    const transactionResponse = await simpleStorage.store(7);
+    await transactionResponse.wait(1);
+    const updatedValue = await simpleStorage.retrieve();
+    console.log(`Updated Value: ${updatedValue}`);
+
     // Getting the current transaction Hash
-    const txHash = await simpleStorage.deploymentTransaction;
-    console.log('Deployment Transaction Hash:', txHash);
+    const txHash = await simpleStorage.deployTransaction;
+    //console.log('Deployment Transaction Hash:', txHash);
 
     // Getting the transaction details for reading the CLI
     /*provider
@@ -44,7 +52,7 @@ async function main() {
 
 // This function will serve to verify automatically the code
 // in the blockexplorer, right after its deployment.
-async function verify(contractAddress: Promise<string>, args: string[]) {
+async function verify(contractAddress: string, args: string[]) {
     console.log('Verifying contract...');
     // we use trycatch because if the verification does not works,
     // the script will continue
