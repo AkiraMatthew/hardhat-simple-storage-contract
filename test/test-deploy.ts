@@ -26,4 +26,21 @@ describe('SimpleStorage', function () {
         const currentValue = await simpleStorage.retrieve();
         assert.equal(currentValue.toString(), expectedValue);
     });
+    // to test
+    /*it('Should add a new person', async () => {
+        interface People {
+            person: string;
+            favoriteNumber: number | string;
+        }
+
+        let people: People[] = [];
+        const person = 'Akira';
+        const personFavoriteNumber = 7;
+
+        const addNewPerson = await simpleStorage.addPerson.push(
+            person,
+            personFavoriteNumber
+        );
+        assert.equal(people, addNewPerson);
+    });*/
 });
