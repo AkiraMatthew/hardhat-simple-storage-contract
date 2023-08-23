@@ -3,6 +3,7 @@ import('@nomiclabs/hardhat-etherscan');
 import { HardhatUserConfig } from 'hardhat/config';
 import 'dotenv/config';
 import '@nomiclabs/hardhat-ethers';
+import './tasks/block-number';
 
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
