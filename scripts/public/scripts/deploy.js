@@ -16,6 +16,7 @@ async function main() {
     // 4 == "4" -> true
     // 4 === "4" -> false
     if (hardhat_1.network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
+        console.log('Waiting for blocks txns');
         await simpleStorage.deployTransaction.wait(6);
         await verify(simpleStorage.address, []);
     }
