@@ -14,7 +14,7 @@ describe('SimpleStorage', function () {
         // assert
         // expect
         chai_1.assert.equal(currentValue.toString(), expectedValue);
-        (0, chai_1.expect)(currentValue.toString().to.equal(expectedValue));
+        //));
     });
     it("Should update when we call 'store'", async () => {
         const expectedValue = '7';
