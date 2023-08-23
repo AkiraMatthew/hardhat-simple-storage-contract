@@ -1,13 +1,20 @@
 import('@nomiclabs/hardhat-waffle');
 import('@nomiclabs/hardhat-etherscan');
-import { task, HardhatUserConfig } from 'hardhat/config';
+import { HardhatUserConfig } from 'hardhat/config';
 import 'dotenv/config';
 import '@nomiclabs/hardhat-ethers';
+
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 
-const config: HardhatUserConfig = {
+interface MyHardhatConfig extends HardhatUserConfig {
+    etherscan: {
+        apiKey: string | Record<string, string> | undefined;
+    };
+}
+
+const config: MyHardhatConfig = {
     // here isn't shown but by default we have:
     // defaultNetwork: "hardhat"
     // this fake hardhat network automatically provides you
@@ -24,9 +31,9 @@ const config: HardhatUserConfig = {
         },
     },
     solidity: '0.8.8',
-    // etherscan: {
-    //     apiKey: ETHERSCAN_API_KEY,
-    // },
+    etherscan: {
+        apiKey: ETHERSCAN_API_KEY,
+    },
 };
 
 export default config;

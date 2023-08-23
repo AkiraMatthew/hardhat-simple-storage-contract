@@ -46,8 +46,8 @@ const config = {
         },
     },
     solidity: '0.8.8',
-    // etherscan: {
-    //     apiKey: ETHERSCAN_API_KEY,
-    // },
+    etherscan: {
+        apiKey: ETHERSCAN_API_KEY,
+    },
 };
 exports.default = config;

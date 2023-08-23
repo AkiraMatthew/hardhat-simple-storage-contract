@@ -1,3 +1,5 @@
+import { Bytes, BytesLike } from 'ethers';
+
 export {};
 
 declare global {
