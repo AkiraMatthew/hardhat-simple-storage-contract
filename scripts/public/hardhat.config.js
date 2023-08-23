@@ -4,6 +4,7 @@ require("hardhat-gas-reporter");
 require("dotenv/config");
 require("@nomiclabs/hardhat-ethers");
 require("./tasks/block-number");
+require("solidity-coverage");
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || 'https://eth-sepolia';
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '0xkey';
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || 'key';

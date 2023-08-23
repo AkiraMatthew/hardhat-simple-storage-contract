@@ -3,6 +3,7 @@ import { HardhatUserConfig } from 'hardhat/config';
 import 'dotenv/config';
 import '@nomiclabs/hardhat-ethers';
 import './tasks/block-number';
+import 'solidity-coverage';
 
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || 'https://eth-sepolia';
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '0xkey';
